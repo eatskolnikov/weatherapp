@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using MyWeather.Model;
 using Newtonsoft.Json;
+using Refit;
 using Xamarin.Forms;
 
 namespace MyWeather
@@ -36,17 +37,27 @@ namespace MyWeather
             }
         }
 
-        private void SearchWeather(string city)
+        private async void SearchWeather(string city)
         {
             try
             {
+                /* TODO: I should remove this someday
                 var client = new WebClient();
+
                 var encodedParameter = HttpUtility.UrlEncode(city);
+
                 var formattedUrl = string.Format(App.Endpoint, encodedParameter);
                 var url = new Uri(formattedUrl);
+
                 var resultString = client.DownloadString(url);
+
                 var resultObject = JsonConvert.DeserializeObject<WeatherResponse>(resultString);
+
                 client.Dispose();
+                */
+                var apiClient = RestService.For<IMyWeatherApiClient>(App.BaseUrl);
+
+                var resultObject = await apiClient.GetWeatherFromCity(city, App.ApiKey);
 
                 BindingContext = resultObject;
             }

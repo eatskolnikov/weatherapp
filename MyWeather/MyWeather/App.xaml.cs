@@ -6,6 +6,8 @@ namespace MyWeather
 {
     public partial class App : Application
     {
+        public static string ApiKey = "f4a33bfe56d84a7b895210819181510";
+        public static string BaseUrl = "https://api.apixu.com";
         public static string Endpoint = "https://api.apixu.com/v1/current.json?key=f4a33bfe56d84a7b895210819181510&q={0}";
 
         public App()
